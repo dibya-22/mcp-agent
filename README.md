@@ -1,10 +1,10 @@
-# X Agent
+# MCP Agent
 
 A learning project exploring AI agents using Google Gemini and the Model Context Protocol (MCP).
 
 ## What it does
 
-An AI-powered agent that can interact with X (Twitter) through natural language, built with Gemini as the brain and MCP for tool communication.
+A general-purpose AI agent that can use tools through natural language, built with Gemini as the brain and MCP for tool communication. Just add tools to the server and the agent can use them automatically.
 
 ## Tech Stack
 
@@ -14,7 +14,7 @@ An AI-powered agent that can interact with X (Twitter) through natural language,
 
 ## Project Structure
 ```
-x-agent/
+mcp-agent/
 ├── client/   # MCP client + Gemini chat loop
 └── server/   # MCP server with tools
 ```
@@ -39,6 +39,23 @@ x-agent/
    # terminal 2
    cd client && node index.js
 ```
+
+## Adding Tools
+
+Add any tool to `server/index.js` inside the `isInitializeRequest` block:
+```javascript
+server.tool(
+    "toolName",
+    "what this tool does",
+    { param: z.string() },
+    async ({ param }) => {
+        // your logic here
+        return { content: [{ type: "text", text: result }] };
+    }
+);
+```
+
+Gemini will automatically discover and use it.
 
 ## Status
 
