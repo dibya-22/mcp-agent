@@ -4,6 +4,9 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod"
 
+import { createPost } from "./tools/tweet.js";
+import { checkWeather } from "./tools/weather.js";
+
 
 
 // ... set up server resources, tools, and prompts ...
@@ -41,6 +44,7 @@ app.post("/mcp", async (req, res) => {
             version: "1.0.0"
         });
     
+        //? Add two Numbers
         server.tool(
             "addTwoNumbers", //* tool name
             "add two numbers", //* decription
@@ -58,8 +62,35 @@ app.post("/mcp", async (req, res) => {
                     }]
                 }
             }
-        )
+        );
 
+        //? Create a post on Tweeter
+        server.tool(
+            "createPost",
+            "create a post on X formerly known as tweeter",
+            {
+                //? schema
+                status: z.string()
+            },
+            async (arg) => {
+                const { status } = arg;
+                return createPost(status);
+            }
+        );
+
+        //? Check Weather
+        server.tool(
+            "checkWeather",
+            "check weather of a city",
+            {
+                //? schema
+                city: z.string()
+            },
+            async (arg) => {
+                const { city } = arg;
+                return checkWeather(city);
+            }
+        );
 
         const newSessionId = crypto.randomUUID();
         transport = new StreamableHTTPServerTransport({
