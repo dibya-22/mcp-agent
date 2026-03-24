@@ -6,6 +6,8 @@ import { z } from "zod"
 
 import { createPost } from "./tools/tweet.js";
 import { checkWeather } from "./tools/weather.js";
+import { getStock } from "./tools/stock.js";
+import { searchWeb } from "./tools/search.js";
 
 
 
@@ -89,6 +91,34 @@ app.post("/mcp", async (req, res) => {
             async (arg) => {
                 const { city } = arg;
                 return checkWeather(city);
+            }
+        );
+
+        //? Check Stock
+        server.tool(
+            "getStock",
+            "check stock of a company",
+            {
+                //? schema
+                company: z.string()
+            },
+            async (arg) => {
+                const { company } = arg;
+                return getStock(company);
+            }
+        );
+
+        //? Web Search
+        server.tool(
+            "searchWeb",
+            "Search on web about anything factual",
+            {
+                //? schema
+                query: z.string()
+            },
+            async (arg) => {
+                const { query } = arg;
+                return searchWeb(query);
             }
         );
 
