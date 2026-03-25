@@ -57,6 +57,29 @@ server.tool(
 
 Gemini will automatically discover and use it.
 
+## Tools
+
+### - addTwoNumbers
+
+> Adds two numbers and returns the result.
+
+### - createPost
+
+> Creates a post on X (Twitter) using the provided text.
+
+### - checkWeather
+
+> Fetches current weather of a city using wttr.in and returns condition and temperature.
+
+### - getStock
+
+> Searches a company, retrieves its stock symbol, and returns price, change, high, and low.
+
+### - searchWeb
+
+> Performs a DuckDuckGo search and returns a short answer with source link if available.
+
+
 ## Status
 
 Work in progress — learning project.
